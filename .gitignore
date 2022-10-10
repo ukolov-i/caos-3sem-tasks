@@ -1,0 +1,9 @@
+*
+!*.*
+!*/
+
+*test*
+./solutions/build
+./solutions/start.sh
+.clang-format
+*.out
