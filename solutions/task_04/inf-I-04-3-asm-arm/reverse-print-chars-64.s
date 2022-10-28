@@ -6,6 +6,7 @@
 .text
 .global main
 
+
 //
 //      c-like signature
 //      int* 
@@ -18,10 +19,9 @@ init:
         stp     x29, x30, [sp, -16]!        // take stack
         mov     x29, sp                     
 
-//        sbfiz   x0, x0, 1, x1
         sbfiz   x0, x0, 2, 32               // capacity *= sizeof(int)
         bl      malloc                      // vector = malloc(capacity)
-        cbz     x0, .BadAlloc_init               // vector == 0
+        cbz     x0, .BadAlloc_init          // vector == 0
 
         ldp     x29, x30, [sp], 16          // free stack
         ret                                 // return vector
@@ -53,7 +53,6 @@ expand:
 
         // setting arguments and calling functio
         ldr     x0, [x0]                    // x0 = vector
-//        mov     w1, [w21, 2]                     // w1 = new_capacity * 4
         sbfiz   x1, x21, 2, 32              // w1 = new_capacity * 4
         bl      realloc                     
         
@@ -71,7 +70,6 @@ expand:
         ret
 
 .BadAlloc_expand:
-//        mov     x0, x19                       // x0 = *vector
         ldr     x0, [x19]                     // x0 = *vector
         bl      free
         b       .BadAlloc_init
@@ -118,7 +116,6 @@ push_back:
         add     w0, w0, 1                   // ++w0
         str     w0, [x19]                   // *size = w0
 
-        // load used registers from stack and free stack
         ldp     x19, x20, [sp, 16]              
         ldp     x29, x30, [sp], 48
 
