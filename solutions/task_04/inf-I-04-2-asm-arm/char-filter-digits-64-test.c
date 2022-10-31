@@ -37,7 +37,7 @@ test(const char* data) {
     read_output_sweeps(buffer);
 
     int status = strcmp(char_filter_digits(copy), buffer);
-    LOG_CONDITION(status == 0, "PASSED", "FAILED", "   %s %s\n", copy, buffer);
+    LOG_RESULT(status == 0, "   %s %s\n", copy, buffer);
     free(copy);
 }
 
