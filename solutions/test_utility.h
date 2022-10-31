@@ -1,3 +1,8 @@
+#ifndef TEST_UTIL_H
+#define TEST_UTIL_H
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wformat-truncation"
+
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -6,9 +11,6 @@
 #include <limits.h>
 #include <string.h>
 
-
-#ifndef TEST_UTIL_H
-#define TEST_UTIL_H
 
 // Colors
 #define RED   "\x1B[31m"
@@ -32,21 +34,21 @@
 #define EQUAL_FLOAT(left, right) (fabsf(left - right) < FLOAT_TOLERANCE)
 
 // Test utility
-#define TEST(i) NOT_OPTIMIZE     void test##i()
+#define TEST(i)                 NOT_OPTIMIZE void test##i()
 #define LOG_STARTING_TESTS()    LOG(" --- STARTING TESTS --- ")
 #define LOG_FINISHED_TESTS()    LOG(" --- FINISHED TESTS --- ")
-#define START_TEST(i)            LOG("RUNNING TEST "#i);
+#define START_TEST(i)           LOG("RUNNING TEST "#i);
 
-#define BENCHMARK(i) NOT_OPTIMIZE   void benchmark##i()
+#define BENCHMARK(i)               NOT_OPTIMIZE void benchmark##i()
 #define LOG_STARTING_BENCMARKS()   LOG(" --- STARTING BENCHMARKS --- ")
 #define LOG_FINISHED_BENCMARKS()   LOG(" --- FINISHED BENCHMARKS --- ")
-#define START_BENCHMARK(i)          LOG("RUNNING BENCHMARK "#i);
+#define START_BENCHMARK(i)         LOG("RUNNING BENCHMARK "#i);
 
 // Loging
-#define LOG(i) printf(BLU "\n"i"\n" RESET)
-#define LOG_DEBUG(i) printf(YEL " "i"\n" RESET)
-#define LOG_SUCCESS(i) printf(GRN " "i"\n" RESET)
-#define LOG_FAILURE(i) printf(RED " "i"\n" RESET)
+#define LOG(i)          printf(BLU "\n"i"\n" RESET)
+#define LOG_DEBUG(i)    printf(YEL " "i"\n" RESET)
+#define LOG_SUCCESS(i)  printf(GRN " "i"\n" RESET)
+#define LOG_FAILURE(i)  printf(RED " "i"\n" RESET)
 #define LOG_CONDITION(cond, success_msg, failure_msg, fmt, ...) \
     if (cond) { \
         LOG_SUCCESS(success_msg); \
@@ -54,8 +56,7 @@
         LOG_FAILURE(failure_msg); \
         printf(fmt, ##__VA_ARGS__); \
     }
-#define LOG_RESULT(cond, fmt, ...) \
-    LOG_CONDITION(cond, "PASSED", "FAILED", fmt, __VA_ARGS__)
+#define LOG_RESULT(cond, fmt, ...) LOG_CONDITION(cond, "PASSED", "FAILED", fmt, __VA_ARGS__)
 
 // IO managment
 #define OPEN_INPUT() \
@@ -65,6 +66,7 @@
         printf("%s\n", INPUT_FILE); \
         exit(1); \
     }
+
 #define OPEN_OUPUT() \
     output_ptr = fopen(OUTPUT_FILE, "r"); \
     if (output_ptr == NULL) { \
@@ -72,10 +74,10 @@
         printf("%s\n", OUTPUT_FILE); \
         exit(1); \
     }
+
 #define CLOSE_INPUT() fclose(input_ptr);
 #define CLOSE_OUTPUT() fclose(output_ptr);
 #define WRITE_INPUT(fmt, ...) fprintf(input_ptr, fmt, ##__VA_ARGS__)
-// #define READ_OUTPUT(fmt, ...) fscanf(output_ptr, fmt, ##__VA_ARGS__)
 #define READ_OUTPUT(fmt, ...) while (fscanf(output_ptr, fmt, ##__VA_ARGS__) != EOF)
 #define WRITE_INPUT_SWEEP(fmt, ...) \
     OPEN_INPUT(); \
@@ -103,8 +105,6 @@ char QEMU_FLAGS[PATH_MAX];
 char LIB_ARCH_PATH[PATH_MAX];
 
 
-#pragma GCC diagnostic push
-#pragma GCC diagnostic ignored "-Wformat-truncation"
 
 
 void set_source() {
@@ -164,7 +164,6 @@ void set_exec_io() {
 }
 
 void init_arch(int argc, char** argv) {
-    // LOG_DEBUG("INITING TEST ENVIRONMENT");
     if (argc < 5) {
         LOG_FAILURE("NOT ENOUGH ARGUMENTS");
         exit(1);
@@ -181,8 +180,6 @@ void init_arch(int argc, char** argv) {
     strcat(strcat(EXEC_RUNNER, " "), RUNNER_FILE);    
 
     set_exec_io();
-
-    // LOG_DEBUG("INITTED TEST ENVIRONMENT");
 }
 
 void run_arch() {
@@ -204,5 +201,4 @@ void quit() {
 }
 
 #pragma GCC diagnostic pop
-
 #endif
