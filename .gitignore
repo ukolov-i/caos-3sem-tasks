@@ -3,7 +3,10 @@
 !*/
 
 *test*
-./solutions/build
+!*test.c
+build
 ./solutions/start.sh
 .clang-format
+.vscode
+*.csv
 *.out
