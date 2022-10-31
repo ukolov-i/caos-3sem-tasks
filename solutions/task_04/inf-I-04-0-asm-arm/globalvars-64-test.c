@@ -18,7 +18,7 @@ NOT_OPTIMIZE void
 test() {
     calculate();
 
-    LOG_CONDITION(R == A * B + C * D, "PASSED", "FAILED", "   %lu %lu\n", R, A * B + C * D);
+    LOG_RESULT(R == A * B + C * D, "   %lu %lu\n", R, A * B + C * D);
 }
 
 TEST(0) {

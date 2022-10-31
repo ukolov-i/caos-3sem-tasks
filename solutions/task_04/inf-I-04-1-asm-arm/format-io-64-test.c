@@ -15,7 +15,7 @@ test(const int a, const int b) {
     run_arch();
     read_output_sweepi(buffer);
 
-    LOG_CONDITION(a + b == buffer[0], "PASSED", "FAILED", "   %d %d\n", a + b, buffer[0]);
+    LOG_RESULT(a + b == buffer[0], "   %d %d\n", a + b, buffer[0]);
 }
 
 TEST(0) {
@@ -64,7 +64,7 @@ TEST(4) {
 
 NOT_OPTIMIZE void
 run_tests() {
-    LOG(" --- STARTING TESTS --- ");
+    LOG_STARTING_TESTS();
 
     test0();
     test1();
@@ -72,7 +72,7 @@ run_tests() {
     test3();
     test4();
 
-    LOG(" --- FINISHED TESTS --- ");
+    LOG_FINISHED_TESTS();
 }
 
 

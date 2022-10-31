@@ -94,7 +94,7 @@ TEST(4) {
 
 NOT_OPTIMIZE void
 run_tests() {
-    LOG(" --- STARTING TESTS --- ");
+    LOG_STARTING_TESTS();
 
     test0();
     test1();
@@ -102,7 +102,7 @@ run_tests() {
     test3();
     test4();
 
-    LOG(" --- FINISHED TESTS --- ");
+    LOG_FINISHED_TESTS();
 }
 
 
